@@ -7,7 +7,7 @@ const path = require('path');
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000","http://20.24.147.227:3000"],
   })
 );
 app.use(busboy({
