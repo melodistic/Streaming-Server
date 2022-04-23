@@ -8,6 +8,4 @@ RUN npm install
 
 COPY . .
 
-RUN mkdir music
-
 CMD ["npm", "start"]

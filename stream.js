@@ -14,17 +14,17 @@ app.use(busboy({
     highWaterMark: 2 * 1024 * 1024
 }));
 
-const uploadPath = path.join(__dirname, 'music/');
+const uploadPath = path.join(__dirname, 'combine-result/');
 
 app.get("/api/playlist", async (req, res) => {
-  let files = await fs.readdirSync("./music");
+  let files = await fs.readdirSync("./combine-result");
   res.send({ files });
 });
 
 app.get("/api/play/:filename", function (req, res) {
   var filename = req.params.filename;
 
-  var music = "music/" + filename;
+  var music = "combine-result/" + filename;
 
   var stat = fs.statSync(music);
   range = req.headers.range;
