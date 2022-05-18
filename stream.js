@@ -18,6 +18,7 @@ const uploadPath = path.join(__dirname, 'combine-result/');
 
 app.get("/api/playlist", async (req, res) => {
   let files = await fs.readdirSync("./combine-result");
+  files = files.filter((file) => file.endsWith("wav"))
   res.send({ files });
 });
 
