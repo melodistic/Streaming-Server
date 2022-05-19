@@ -17,9 +17,10 @@ app.use(busboy({
 const uploadPath = path.join(__dirname, 'combine-result/');
 
 app.get("/api/playlist", async (req, res) => {
-  let files = await fs.readdirSync("./combine-result");
-  files = files.filter((file) => file.endsWith("wav"))
-  res.send({ files });
+  let files = await fs.readFileSync("./combine-result/data.json");
+  let data = JSON.parse(files);
+
+  res.send({files:data});
 });
 
 app.get("/api/play/:filename", function (req, res) {
