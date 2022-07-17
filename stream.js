@@ -3,30 +3,28 @@ const fs = require("fs");
 const cors = require("cors");
 const app = express();
 const busboy = require('connect-busboy');
-const path = require('path');
+
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000","http://20.24.147.227:3000"],
+    origin: ["http://localhost:3000","http://20.24.147.227:3000","https://melodistic.ggolfz.me"],
   })
 );
 app.use(busboy({
     highWaterMark: 2 * 1024 * 1024
 }));
 
-const uploadPath = path.join(__dirname, 'combine-result/');
+app.get("/api/stream", (req, res) => {
+  res.json({
+    message: 'pong',
+    timestamp: new Date()
+  })
+})
 
-app.get("/api/playlist", async (req, res) => {
-  let files = await fs.readFileSync("./combine-result/data.json");
-  let data = JSON.parse(files);
-
-  res.send({files:data});
-});
-
-app.get("/api/play/:filename", function (req, res) {
+app.get("/api/stream/:filename", function (req, res) {
   var filename = req.params.filename;
 
-  var music = "combine-result/" + filename;
+  var music = "combine-result/" + filename + ".wav";
 
   var stat = fs.statSync(music);
   range = req.headers.range;
@@ -66,36 +64,6 @@ app.get("/api/play/:filename", function (req, res) {
   readStream.pipe(res);
 });
 
-app.post('/upload',(req, res, next) => {
- 
-    req.pipe(req.busboy); // Pipe it trough busboy
- 
-    req.busboy.on('file', (fieldname, file, filename) => {
-        filename = filename["filename"]
-        console.log(`Upload of '${filename}' started`);
- 
-        // Create a write stream of the new file
-        const fstream = fs.createWriteStream(path.join(uploadPath, filename));
-        // Pipe it trough
-        file.pipe(fstream);
- 
-        // On finish of the upload
-        fstream.on('close', () => {
-            console.log(`Upload of '${filename}' finished`);
-            res.redirect('back');
-        });
-    });
-});
-
-app.get('/', (req, res) => {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write('<form action="upload" method="post" enctype="multipart/form-data">');
-    res.write('<input type="file" name="fileToUpload"><br>');
-    res.write('<input type="submit">');
-    res.write('</form>');
-    return res.end();
-});
-
 app.listen(5050, function () {
-  console.log("[NodeJS] Application Listening on Port 5050");
+  console.log("Application Listening on Port 5050");
 });
