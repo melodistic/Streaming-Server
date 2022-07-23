@@ -7,7 +7,7 @@ const busboy = require('connect-busboy');
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:3000","http://20.24.147.227:3000","https://melodistic.ggolfz.me"],
+    origin: ["http://localhost:3000","http://20.24.147.227:3000","https://melodistic.ggolfz.me","https://melodistic-aks.ggolfz.me"],
   })
 );
 app.use(busboy({
