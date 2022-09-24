@@ -1,8 +1,9 @@
-const express = require("express");
+import express, { Application, Request, Response } from 'express';
 const fs = require("fs");
 const cors = require("cors");
-const app = express();
 const busboy = require('connect-busboy');
+
+const app: Application = express();
 
 app.use(
   cors({
@@ -21,13 +22,25 @@ app.get("/api/stream", (req, res) => {
   })
 })
 
-app.get("/api/stream/:filename", function (req, res) {
+app.get("/api/storage/user-profile/:userId", (req: Request, res: Response) => {
+  const userId = req.params.userId;
+  // todo: query file path from db
+  res.sendFile(`/app/uploads/user/${userId}.jpg`, { root: __dirname });
+})
+
+app.get("/api/storage/track/:trackId", (req: Request, res: Response) => {
+  const trackId = req.params.trackId;
+  // todo: query file path from db
+  res.sendFile(`/app/uploads/user/${trackId}.jpg`, { root: __dirname });
+})
+
+app.get("/api/stream/:filename", (req: Request, res: Response) => {
   var filename = req.params.filename;
 
   var music = "combine-result/" + filename + ".wav";
 
   var stat = fs.statSync(music);
-  range = req.headers.range;
+  var range = req.headers.range;
   var readStream;
 
   if (range !== undefined) {
@@ -37,8 +50,8 @@ app.get("/api/stream/:filename", function (req, res) {
     var partial_end = parts[1];
 
     if (
-      (isNaN(partial_start) && partial_start.length > 1) ||
-      (isNaN(partial_end) && partial_end.length > 1)
+      (isNaN(parseInt(partial_start)) && partial_start.length > 1) ||
+      (isNaN(parseInt(partial_end)) && partial_end.length > 1)
     ) {
       return res.sendStatus(500); 
     }

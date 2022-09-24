@@ -1,11 +1,15 @@
 {
   "scripts": {
-    "start": "node stream.js"
+    "start": "nodemon stream.ts"
   },
   "dependencies": {
     "connect-busboy": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.3",
-    "multer": "^1.4.4"
+    "multer": "^1.4.4",
+    "nodemon": "^2.0.20"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14"
   }
 }
