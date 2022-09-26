@@ -24,12 +24,12 @@ app.get("/api/stream", (req, res) => {
 
 app.get("/api/storage/user-profile/:filename", (req: Request, res: Response) => {
   const filename = req.params.filename;
-  res.sendFile(`/app/uploads/user/${filename}`, { root: __dirname });
+  res.sendFile(`./uploads/user/${filename}`, { root: __dirname });
 })
 
 app.get("/api/storage/track/:filename", (req: Request, res: Response) => {
   const filename = req.params.filename;
-  res.sendFile(`/app/uploads/track/${filename}`, { root: __dirname });
+  res.sendFile(`./uploads/track/${filename}`, { root: __dirname });
 })
 
 app.get("/api/stream/:filename", (req: Request, res: Response) => {
