@@ -22,16 +22,14 @@ app.get("/api/stream", (req, res) => {
   })
 })
 
-app.get("/api/storage/user-profile/:userId", (req: Request, res: Response) => {
-  const userId = req.params.userId;
-  // todo: query file path from db
-  res.sendFile(`/app/uploads/user/${userId}.jpg`, { root: __dirname });
+app.get("/api/storage/user-profile/:filename", (req: Request, res: Response) => {
+  const filename = req.params.filename;
+  res.sendFile(`/app/uploads/user/${filename}`, { root: __dirname });
 })
 
-app.get("/api/storage/track/:trackId", (req: Request, res: Response) => {
-  const trackId = req.params.trackId;
-  // todo: query file path from db
-  res.sendFile(`/app/uploads/user/${trackId}.jpg`, { root: __dirname });
+app.get("/api/storage/track/:filename", (req: Request, res: Response) => {
+  const filename = req.params.filename;
+  res.sendFile(`/app/uploads/track/${filename}`, { root: __dirname });
 })
 
 app.get("/api/stream/:filename", (req: Request, res: Response) => {
